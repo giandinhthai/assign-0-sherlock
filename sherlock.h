@@ -38,7 +38,7 @@ int limit(double x, int min_x, int max_x){
 
 int firstMeet(int& EXP1, int& EXP2, const int& E1){
     //Complete this function to gain point on task 1
-    // kiem tra dieu kien cua cac input
+    /*// kiem tra dieu kien cua cac input
     EXP1=limit(EXP1,min_all,max_EXP);
     EXP2=limit(EXP2,min_all,max_EXP);
     //truong hop 1
@@ -103,7 +103,7 @@ int firstMeet(int& EXP1, int& EXP2, const int& E1){
         EXP1=limit(EXP1-0.1*E1,min_all,max_EXP);
         //ca 2 EXP deu duoc tinh bang limit nen khong can kiem tra dieu kien
     }
-    return EXP1+EXP2;
+    */return EXP1+EXP2;
 
 }
 
@@ -128,8 +128,8 @@ int investigateScene(int& EXP1, int& EXP2, int& HP2, int& M2, const int& E2){
 }
 
 void con_duong_1(int& HP1, int& EXP1, int& M1,const int E3){
-   bool hanh_ly=false;
-   int i=0,k;
+    bool hanh_ly=false;
+    int i=0,k;
     // khai bao mang p1[i]
     int p1[9];
     // cap nhat cac gia tri p1[i]
@@ -165,7 +165,6 @@ bool isPrime(int n)
 }
 
 void con_duong_2(int& HP1, int& EXP1, int& M1,const int E3){
-   bool hanh_ly=false;
    int so_snt=0,p2[7],n=2;
    // tim 7 so nguyen to dau tien
    while(so_snt<7){
@@ -175,11 +174,31 @@ void con_duong_2(int& HP1, int& EXP1, int& M1,const int E3){
     }
     n++;
    }
-   // phep bien doi dau tien p2i=(p2i+E3)%26
-   for(int i=0;i<7;i++){
+   // phep bien doi dau tien p2i=(p2i+E3)%26,tinh tong va trung binh
+   bool hanh_ly=false;
+   int tong=0,trung_binh,i,k;
+   for(i=0;i<7;i++){
         p2[i]=(p2[i]+E3)%26;
+        tong+=p2[i];
    }
-   
+   trung_binh=limit(tong/7.0,0,tong/7+5);
+   //cap nhat p2i lan 2 p2i = (p2i + s + m)%26 + 65
+   for(i=0;i<7;i++){
+        p2[i]=(p2[i]+tong+trung_binh)%26+65;
+        if (p2[i]==80){
+            hanh_ly=true;
+            break;
+        }
+   }
+   if(hanh_ly){
+        k=i+1;
+        HP1=limit(HP1-p2[i]*k*2,min_all,max_HP);
+        EXP1=limit(EXP1+(1000-p2[i]*k)%101,min_all,max_EXP);
+        M1=limit(M1-k*E3/9.0,min_all,max_M);
+    }
+    else{
+        M1=limit(M1-7*7*E3/9.0,min_all,max_M);
+    }
 }
 
 int traceLuggage(int& HP1, int& EXP1, int& M1, const int& E3){
@@ -188,8 +207,9 @@ int traceLuggage(int& HP1, int& EXP1, int& M1, const int& E3){
     HP1=limit(HP1,min_all,max_HP);
     EXP1=limit(EXP1,min_all,max_EXP);
     M1=limit(M1,min_all,max_M);
-    //con duong 1
+    //cac con duong
     con_duong_1(HP1,EXP1,M1,E3);
+    con_duong_2(HP1,EXP1,M1,E3);
     return -1;
 }
 
