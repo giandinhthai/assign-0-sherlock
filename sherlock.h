@@ -329,11 +329,13 @@ int traceLuggage(int& HP1, int& EXP1, int& M1, const int& E3){
     EXP1=limit(EXP1,min_all,max_EXP);
     M1=limit(M1,min_all,max_M);
     //cac con duong
-    if(!(
-    con_duong_1(HP1,EXP1,M1,E3)
-    ||con_duong_2(HP1,EXP1,M1,E3)
-    ||con_duong_3(HP1,EXP1,M1,E3)
-    ||con_duong_4(HP1,EXP1,M1,E3))){
+    bool tim=false;
+    if(con_duong_1(HP1,EXP1,M1,E3)) tim=true;
+    if(con_duong_2(HP1,EXP1,M1,E3)) tim=true;
+    if(con_duong_3(HP1,EXP1,M1,E3)) tim=true;
+    if(con_duong_4(HP1,EXP1,M1,E3)) tim=true;
+
+    if(!(tim)){
         HP1=limit(HP1-(59*E3)%900,min_all,max_HP);
         EXP1=limit((EXP1-(79*E3)%300),min_all,max_EXP);
         return -1;
