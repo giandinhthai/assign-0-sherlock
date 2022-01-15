@@ -167,13 +167,13 @@ bool isPrime(int n)
 void con_duong_2(int& HP1, int& EXP1, int& M1,const int E3){
    int so_snt=0,p2[7],n=2;
    // tim 7 so nguyen to dau tien
-   while(so_snt<7){
-    if (isPrime(n)){
-        p2[so_snt]=n;
-        so_snt++;
+    while(so_snt<7){
+        if (isPrime(n)){
+            p2[so_snt]=n;
+            so_snt++;
+        }
+        n++;
     }
-    n++;
-   }
    // phep bien doi dau tien p2i=(p2i+E3)%26,tinh tong va trung binh
    bool hanh_ly=false;
    int tong=0,trung_binh,i,k;
@@ -190,6 +190,7 @@ void con_duong_2(int& HP1, int& EXP1, int& M1,const int E3){
             break;
         }
    }
+   // cap nhat chi so sherlock
    if(hanh_ly){
         k=i+1;
         HP1=limit(HP1-p2[i]*k*2,min_all,max_HP);
@@ -200,6 +201,94 @@ void con_duong_2(int& HP1, int& EXP1, int& M1,const int E3){
         M1=limit(M1-7*7*E3/9.0,min_all,max_M);
     }
 }
+
+void con_duong_3(int& HP1, int& EXP1, int& M1,const int E3){
+    int p3[20],max_p3,i;
+    for (i=0;i<20;i++){
+        p3[i]=4*(i+1)*(i+1);
+    }
+    p3[0]=(p3[0]+E3*E3)%113;
+    max_p3=p3[0];
+    // cap nhat p3i p3[i]=(p3[i]+E3*E3)%113
+    for(i=1;i<20;i++){
+        p3[i]=(p3[i]+E3*E3)%113;
+        if (p3[i]>max_p3){
+            max_p3=p3[i];
+        }
+    }
+    //tim hanh ly
+    int k=0;
+    bool hanh_ly=false;
+    for(i=19;i>=0;i--){
+        p3[i]=(((p3[i]+E3)/max_p3))%26+65;
+        k++;
+        if (p3[i]==80){
+            hanh_ly=true;
+            break;
+        }
+    }
+    //cap nhat chi so sherlock
+    if(hanh_ly){
+        HP1=limit(HP1-p3[i]*k*3,min_all,max_HP);
+        EXP1=limit(EXP1+(3500-p3[i]*k)%300,min_all,max_EXP);
+        M1=limit(M1-k*E3/9.0,min_all,max_M);
+    }
+    else{
+        M1=limit(M1-20*20*E3/9.0,min_all,max_M);
+    }
+}
+
+int so_ngay(int thang){
+    switch(thang){
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            return 31;
+        case 4: case 6: case 9: case 11:
+            return 30;
+        case 2:
+            return 28;
+    }
+}
+
+void con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
+    int p4[12],i;
+    // tinh p4i theo so ngay trong thang k nhuan
+    for(i=0;i<12;i++){
+        p4[i]=so_ngay(i+1);
+    }
+    // cap nhat lan 1
+    p4[0]=(p4[0]+((E3/29)*(E3/29)*(E3/29)))%9;
+    int min_p4=p4[0],min_idx=1;
+    for(i=1;i<12;i++){
+        p4[i]=(p4[i]+((E3/29)*(E3/29)*(E3/29)))%9;
+        if(p4[i]<min_p4){
+            min_p4=p4[i];
+            min_idx=i+1;
+        }
+    }
+    //cap nhat lan 2 p4i = ((p4i + E3)(*(min/min_idx)))%26 + 65
+    int k=0;
+    bool hanh_ly=false;
+    for(i=19;i>=0;i--){
+        p4[i]=((p4[i]+E3)*((min_p4/min_idx)))%26+65;
+        k++;
+        // tim hanh ly
+        if (p4[i]==80){
+            hanh_ly=true;
+            break;
+        }
+    }
+    //cap nhat chi so sherlock
+    if(hanh_ly){
+        HP1=limit(HP1-p4[i]*k*4,min_all,max_HP);
+        EXP1=limit(EXP1+(4500-p4[i]*k)%400,min_all,max_EXP);
+        M1=limit(M1-k*E3/9.0,min_all,max_M);
+    }
+    else{
+        M1=limit(M1-12*12*E3/9.0,min_all,max_M);
+    }
+
+}
+
 
 int traceLuggage(int& HP1, int& EXP1, int& M1, const int& E3){
     //Complete this function to gain point on task 3
