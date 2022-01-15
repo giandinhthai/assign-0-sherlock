@@ -24,7 +24,7 @@ using namespace std;
 ///Complete the following functions
 ///DO NOT modify any parameters in the functions.
 ////////////////////////////////////////////////////////////////////////
-int const max_HP=999,max_EXP=900,max_M=2000,min_all=0;
+int const max_HP=999,max_EXP=900,max_M=2000,max_E=999,min_all=0;
 
 int limit(double x, int min_x, int max_x){
     if(x<min_x) x=min_x;
@@ -38,9 +38,10 @@ int limit(double x, int min_x, int max_x){
 
 int firstMeet(int& EXP1, int& EXP2, const int& E1){
     //Complete this function to gain point on task 1
-    /*// kiem tra dieu kien cua cac input
+    // kiem tra dieu kien cua cac input
     EXP1=limit(EXP1,min_all,max_EXP);
     EXP2=limit(EXP2,min_all,max_EXP);
+    if (E1!=limit(E1,min_all,max_E)) return -999;
     //truong hop 1
     if (E1<400){
         //thay doi exp cua waston qua thong tin cua sherlock
@@ -103,31 +104,56 @@ int firstMeet(int& EXP1, int& EXP2, const int& E1){
         EXP1=limit(EXP1-0.1*E1,min_all,max_EXP);
         //ca 2 EXP deu duoc tinh bang limit nen khong can kiem tra dieu kien
     }
-    */return EXP1+EXP2;
+    return EXP1+EXP2;
 
+}
+void EXP_giai_doan_1(int& EXP1, int& EXP2,double& d){
+    EXP2=limit(EXP2+d,min_all,max_EXP);
+    EXP1=limit(EXP1+d/3.0,min_all,max_EXP);
+    d=0;
+}
+
+double luy_thua(double x,int lan){
+    double tich=1;
+    for (int i=0;i<lan;i++){
+        tich=tich*x;
+    }
+    return tich;
 }
 
 int investigateScene(int& EXP1, int& EXP2, int& HP2, int& M2, const int& E2){
     //Complete this function to gain point on task 2
-    /*// kiem tra dieu kien input
+    // kiem tra dieu kien input
     EXP1=limit(EXP1,min_all,max_EXP);
     EXP2=limit(EXP2,min_all,max_EXP);
-    HP1=limit(HP1,min_all,max_HP);
     HP2=limit(HP2,min_all,max_HP);
     M2=limit(M2,min_all,max_M);
+    if (E2!=limit(E2,min_all,max_E)) return -999;
+
     //giai doan 1
     // khai bao bien la exp tang cua waston
-    int d=0;
+    double d=0,truong_hop_3=0;
     //cac truong hop E2
-    d+=limit(E2/9.0+10,min_all,max_EXP);
-    if(EXP>=300){
-        d+=limit()
+    d+=E2/9.0+10;
+    EXP_giai_doan_1(EXP1,EXP2,d);
+    if(E2>=300){
+        d+=0.35*E2;
+    }
+    EXP_giai_doan_1(EXP1,EXP2,d);
+    if(E2>=500){
+        d+=0.17*(E2/9.0+10+0.35*E2);
+    }
+    EXP_giai_doan_1(EXP1,EXP2,d);
+    //giai doan 2
+    HP2=limit(HP2-luy_thua(E2,3)/luy_thua(2,23),min_all,max_HP);
+    if ((E2%2)==0){
+        M2=limit(M2+E2*E2/50.0,min_all,max_M);
     }
 
-    */return -1;
+    return EXP2+HP2+M2+EXP1;
 }
 
-void con_duong_1(int& HP1, int& EXP1, int& M1,const int E3){
+bool con_duong_1(int& HP1, int& EXP1, int& M1,const int E3){
     bool hanh_ly=false;
     int i=0,k;
     // khai bao mang p1[i]
@@ -151,6 +177,7 @@ void con_duong_1(int& HP1, int& EXP1, int& M1,const int E3){
     else{
         M1=limit(M1-9*9*E3/9.0,min_all,max_M);
     }
+    return hanh_ly;
 }
 
 // ham kiem tra so nguyen to
@@ -164,7 +191,7 @@ bool isPrime(int n)
     return true;
 }
 
-void con_duong_2(int& HP1, int& EXP1, int& M1,const int E3){
+bool con_duong_2(int& HP1, int& EXP1, int& M1,const int E3){
    int so_snt=0,p2[7],n=2;
    // tim 7 so nguyen to dau tien
     while(so_snt<7){
@@ -200,9 +227,10 @@ void con_duong_2(int& HP1, int& EXP1, int& M1,const int E3){
     else{
         M1=limit(M1-7*7*E3/9.0,min_all,max_M);
     }
+    return hanh_ly;
 }
 
-void con_duong_3(int& HP1, int& EXP1, int& M1,const int E3){
+bool con_duong_3(int& HP1, int& EXP1, int& M1,const int E3){
     int p3[20],max_p3,i;
     for (i=0;i<20;i++){
         p3[i]=4*(i+1)*(i+1);
@@ -236,6 +264,7 @@ void con_duong_3(int& HP1, int& EXP1, int& M1,const int E3){
     else{
         M1=limit(M1-20*20*E3/9.0,min_all,max_M);
     }
+    return hanh_ly;
 }
 
 int so_ngay(int thang){
@@ -250,7 +279,7 @@ int so_ngay(int thang){
     return -1;
 }
 
-void con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
+bool con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
     int p4[12],i;
     // tinh p4i theo so ngay trong thang k nhuan
     for(i=0;i<12;i++){
@@ -259,7 +288,6 @@ void con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
     // cap nhat lan 1
     p4[0]=(p4[0]+((E3/29)*(E3/29)*(E3/29)))%9;
     int min_p4=p4[0],min_idx=1;
-    cout<<min_p4<<endl;
     for(i=1;i<12;i++){
         p4[i]=(p4[i]+((E3/29)*(E3/29)*(E3/29)))%9;
         if(p4[i]<min_p4){
@@ -288,6 +316,7 @@ void con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
     else{
         M1=limit(M1-12*12*E3/9.0,min_all,max_M);
     }
+    return hanh_ly;
 
 }
 
@@ -295,15 +324,21 @@ void con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
 int traceLuggage(int& HP1, int& EXP1, int& M1, const int& E3){
     //Complete this function to gain point on task 3
     // kiem tra dieu kien input
+    if (E3!=limit(E3,min_all,max_E)) return -999;
     HP1=limit(HP1,min_all,max_HP);
     EXP1=limit(EXP1,min_all,max_EXP);
     M1=limit(M1,min_all,max_M);
     //cac con duong
-    con_duong_1(HP1,EXP1,M1,E3);
-    con_duong_2(HP1,EXP1,M1,E3);
-    con_duong_3(HP1,EXP1,M1,E3);
-    con_duong_4(HP1,EXP1,M1,E3);
-    return -1;
+    if(!(
+    con_duong_1(HP1,EXP1,M1,E3)
+    ||con_duong_2(HP1,EXP1,M1,E3)
+    ||con_duong_3(HP1,EXP1,M1,E3)
+    ||con_duong_4(HP1,EXP1,M1,E3))){
+        HP1=limit(HP1-(59*E3)%900,min_all,max_HP);
+        EXP1=limit((EXP1-(79*E3)%300),min_all,max_EXP);
+        return -1;
+    }
+    return HP1+EXP1+M1;
 }
 
 ////////////////////////////////////////////////
