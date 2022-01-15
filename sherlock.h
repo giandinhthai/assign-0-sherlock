@@ -247,6 +247,7 @@ int so_ngay(int thang){
         case 2:
             return 28;
     }
+    return -1;
 }
 
 void con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
@@ -258,6 +259,7 @@ void con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
     // cap nhat lan 1
     p4[0]=(p4[0]+((E3/29)*(E3/29)*(E3/29)))%9;
     int min_p4=p4[0],min_idx=1;
+    cout<<min_p4<<endl;
     for(i=1;i<12;i++){
         p4[i]=(p4[i]+((E3/29)*(E3/29)*(E3/29)))%9;
         if(p4[i]<min_p4){
@@ -268,7 +270,7 @@ void con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
     //cap nhat lan 2 p4i = ((p4i + E3)(*(min/min_idx)))%26 + 65
     int k=0;
     bool hanh_ly=false;
-    for(i=19;i>=0;i--){
+    for(i=11;i>=0;i--){
         p4[i]=((p4[i]+E3)*((min_p4/min_idx)))%26+65;
         k++;
         // tim hanh ly
@@ -299,6 +301,8 @@ int traceLuggage(int& HP1, int& EXP1, int& M1, const int& E3){
     //cac con duong
     con_duong_1(HP1,EXP1,M1,E3);
     con_duong_2(HP1,EXP1,M1,E3);
+    con_duong_3(HP1,EXP1,M1,E3);
+    con_duong_4(HP1,EXP1,M1,E3);
     return -1;
 }
 
