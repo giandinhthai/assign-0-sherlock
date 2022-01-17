@@ -94,8 +94,7 @@ int firstMeet(int& EXP1, int& EXP2, const int& E1){
             }
         }
         else {
-            EXP2=limit(EXP2+E1/7.0+9,min_all,max_EXP);
-            EXP2=limit(EXP2+E1/9.0+11,min_all,max_EXP);
+            EXP2=limit(EXP2+E1/7.0+9+E1/9.0+11,min_all,max_EXP);
             if (EXP2>600){
                 EXP2=limit(EXP2+E1/5.0+6,min_all,max_EXP);
                 EXP2=limit(EXP2*1.15,min_all,max_EXP);
@@ -286,10 +285,11 @@ bool con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
         p4[i]=so_ngay(i+1);
     }
     // cap nhat lan 1
-    p4[0]=(p4[0]+((E3/29)*(E3/29)*(E3/29)))%9;
+    int moi=E3/29;
+    p4[0]=(p4[0]+moi*moi*moi)%9;
     int min_p4=p4[0],min_idx=1;
     for(i=1;i<12;i++){
-        p4[i]=(p4[i]+((E3/29)*(E3/29)*(E3/29)))%9;
+        p4[i]=(p4[i]+moi*moi*moi)%9;
         if(p4[i]<min_p4){
             min_p4=p4[i];
             min_idx=i+1;
