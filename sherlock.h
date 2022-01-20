@@ -25,13 +25,17 @@ using namespace std;
 ///DO NOT modify any parameters in the functions.
 ////////////////////////////////////////////////////////////////////////
 int const max_HP=999,max_EXP=900,max_M=2000,max_E=999,min_all=0;
+int lam_tron_len(double x){
+    if (round(x)!=x){
+        x=round(x+0.5);
+    }
+    return x;
+}
 
 int limit(double x, int min_x, int max_x){
     if(x<min_x) x=min_x;
     else if (x>max_x) x=max_x;
-    if (round(x)!=x){
-        x=round(x+0.5);
-    }
+    x=lam_tron_len(x);
     return (int)x;
 }
 
@@ -207,7 +211,7 @@ bool con_duong_2(int& HP1, int& EXP1, int& M1,const int E3){
         p2[i]=(p2[i]+E3)%26;
         tong+=p2[i];
    }
-   trung_binh=limit(tong/7.0,0,tong/7+5);
+   trung_binh=lam_tron_len(tong/7.0);
    //cap nhat p2i lan 2 p2i = (p2i + s + m)%26 + 65
    for(i=0;i<7;i++){
         p2[i]=(p2[i]+tong+trung_binh)%26+65;
@@ -247,7 +251,7 @@ bool con_duong_3(int& HP1, int& EXP1, int& M1,const int E3){
     int k=0;
     bool hanh_ly=false;
     for(i=19;i>=0;i--){
-        p3[i]=(((p3[i]+E3)/max_p3))%26+65;
+        p3[i]=lam_tron_len(((p3[i]+E3)/max_p3))%26+65;
         k++;
         if (p3[i]==80){
             hanh_ly=true;
@@ -285,11 +289,11 @@ bool con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
         p4[i]=so_ngay(i+1);
     }
     // cap nhat lan 1
-    int moi=E3/29;
-    p4[0]=(p4[0]+moi*moi*moi)%9;
+    int moi=E3/29.0;
+    p4[0]=(p4[0]+lam_tron_len(moi*moi*moi))%9;
     int min_p4=p4[0],min_idx=1;
     for(i=1;i<12;i++){
-        p4[i]=(p4[i]+moi*moi*moi)%9;
+        p4[i]=(p4[i]+lam_tron_len(moi*moi*moi))%9;
         if(p4[i]<min_p4){
             min_p4=p4[i];
             min_idx=i+1;
@@ -299,7 +303,7 @@ bool con_duong_4(int& HP1, int& EXP1, int& M1,const int E3){
     int k=0;
     bool hanh_ly=false;
     for(i=11;i>=0;i--){
-        p4[i]=((p4[i]+E3)*((min_p4/min_idx)))%26+65;
+        p4[i]=((p4[i]+E3)*lam_tron_len(min_p4/min_idx))%26+65;
         k++;
         // tim hanh ly
         if (p4[i]==80){
