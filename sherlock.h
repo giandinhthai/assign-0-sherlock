@@ -43,9 +43,10 @@ int limit(double x, int min_x, int max_x){
 int firstMeet(int& EXP1, int& EXP2, const int& E1){
     //Complete this function to gain point on task 1
     // kiem tra dieu kien cua cac input
+    if (E1!=limit(E1,min_all,max_E)) return -999;
     EXP1=limit(EXP1,min_all,max_EXP);
     EXP2=limit(EXP2,min_all,max_EXP);
-    if (E1!=limit(E1,min_all,max_E)) return -999;
+
     //truong hop 1
     if (E1<400){
         //thay doi exp cua waston qua thong tin cua sherlock
@@ -98,7 +99,8 @@ int firstMeet(int& EXP1, int& EXP2, const int& E1){
             }
         }
         else {
-            EXP2=limit(EXP2+E1/7.0+9+E1/9.0+11,min_all,max_EXP);
+            EXP2=limit(EXP2+E1/7.0+9,min_all,max_EXP);
+            EXP2=limit(EXP2+E1/9.0+11,min_all,max_EXP);
             if (EXP2>600){
                 EXP2=limit(EXP2+E1/5.0+6,min_all,max_EXP);
                 EXP2=limit(EXP2*1.15,min_all,max_EXP);
@@ -127,11 +129,12 @@ double luy_thua(double x,int lan){
 int investigateScene(int& EXP1, int& EXP2, int& HP2, int& M2, const int& E2){
     //Complete this function to gain point on task 2
     // kiem tra dieu kien input
+    if (E2!=limit(E2,min_all,max_E)) return -999;
     EXP1=limit(EXP1,min_all,max_EXP);
     EXP2=limit(EXP2,min_all,max_EXP);
     HP2=limit(HP2,min_all,max_HP);
     M2=limit(M2,min_all,max_M);
-    if (E2!=limit(E2,min_all,max_E)) return -999;
+
 
     //giai doan 1
     // khai bao bien la exp tang cua waston
