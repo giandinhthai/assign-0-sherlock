@@ -1,11 +1,30 @@
+/*
+* Ho Chi Minh City University of Technology
+* Faculty of Computer Science and Engineering
+* Initial code for Assignment 1
+* Programming Fundamentals Spring 2022
+* Author: Vu Van Tien
+* Date: 10.02.2022
+*/
+
+//The library here is concretely set, students are not allowed to include any other libraries.
+#ifndef studyInPink_h
+#define studyInPink_h
+
 #include <iostream>
 #include <iomanip>
 #include <cmath>
 #include <string>
 #include <fstream>
 #include <sstream>
+
 using namespace std;
 
+////////////////////////////////////////////////////////////////////////
+///STUDENT'S ANSWER BEGINS HERE
+///Complete the following functions
+///DO NOT modify any parameters in the functions.
+////////////////////////////////////////////////////////////////////////
 bool ba_so(string s){
     if ((s.size()!=3)||(s=="000")) return false;
     for(int i=0;i<s.size();i++){
@@ -119,6 +138,7 @@ string notebook2(string ntb2) {
     }
     return "000000000";
 }
+
 void read_ntb3(string ntb3,int arr[][10]){
     ifstream f(ntb3);
     if (f.is_open()){
@@ -218,6 +238,7 @@ string notebook3(string ntb3) {
     return ans;
     return "000000000";
 }
+
 string g(string a,string b){
     string ans;
     int c=0;
@@ -301,12 +322,12 @@ void read_points(string points,point all_point[],int& id){
     }
 }
 void calc_time(int& time,point before,point after){
-    time+=9*(abs(before.x-after.x)+abs(before.y-after.y));
+    time+=14*(abs(before.x-after.x)+abs(before.y-after.y));
 }
 void check_catch(
     point all_points[],
     int arr[][100],
-    bool catch_taxi,
+    bool& catch_taxi,
     string& outTimes,
     string & outCatchUps,
     int id
@@ -319,12 +340,12 @@ void check_catch(
     calc_time(time,start_catch,all_points[0]);
     if (time<=arr[all_points[0].x][all_points[0].y]){
         catch_taxi=true;
-        outTimes+=int_to_string(time)+';';
-        outCatchUps+='Y'+';';
+        outTimes=outTimes+int_to_string(time)+';';
+        outCatchUps=outCatchUps+'Y'+';';
     }
     else{
-        outTimes+=int_to_string(time)+';';
-        outCatchUps+='N'+';';
+        outTimes=outTimes+int_to_string(time)+';';
+        outCatchUps=outCatchUps+'N'+';';
     }
     int i=1;
     while(i<id){
@@ -332,21 +353,22 @@ void check_catch(
             calc_time(time,all_points[i-1],all_points[i]);
             if (time<=arr[all_points[i].x][all_points[i].y]){
                 catch_taxi=true;
-                outTimes+=int_to_string(time)+';';
-                outCatchUps+='Y'+';';
+                outTimes=outTimes+int_to_string(time)+';';
+                outCatchUps=outCatchUps+'Y'+';';
             }
             else{
-                outTimes+=int_to_string(time)+';';
-                outCatchUps+='N'+';';
+                outTimes=outTimes+int_to_string(time)+';';
+                outCatchUps=outCatchUps+'N'+';';
             }
         }
         else{
-            outTimes+='-'+';';
-            outCatchUps+='-'+';';
+            outTimes=outTimes+'-'+';';
+            outCatchUps=outCatchUps+'-'+';';
         }
         i++;
     }
-
+    outTimes.erase(outTimes.size()-1,1);
+    outCatchUps.erase(outCatchUps.size()-1,1);
 }
 bool chaseTaxi(
     int arr[100][100],
@@ -372,6 +394,7 @@ bool chaseTaxi(
     check_catch(all_point,arr,catch_taxi,outTimes,outCatchUps,id);
     return catch_taxi;
 }
+
 void read_tag(string tag,string& email,int& n3){
     ifstream f(tag);
     if(f.is_open()){
@@ -396,55 +419,7 @@ string enterLaptop(string tag, string message) {
     return email+';'+pwdL;
     return "";
 }
-
-
-int main(){
-    //cout<<int_to_string(11);
-    string pwd1=notebook1("tc1-file-ntb1.txt");
-    string pwd2=notebook2("tc1-file-ntb2.txt");
-    //int arr[10][10];
-    //read_ntb3("tc1-file-ntb3.txt",arr);
-    //cout<<isPrime(1);
-    //int n=3;
-    //up_to_prime(n);
-    //cout<<n;
-    //int fibo[46];
-    //calc_all_fibo(fibo);
-    //int n=7;
-    //up_to_fibo(fibo,n);
-    //cout<<n;
-    //correct_matrix_ntb3(arr,fibo);
-    /*for(int i=0;i<10;i++){
-        for(int j=0;j<10;j++){
-            cout<<arr[i][j]<<" ";
-        }
-        cout<<endl;
-    }*/
-    //int max_line[10];
-    //find_max_line(arr,max_line);
-    //cout<<arr_to_string(max_line,10);
-    string pwd3=notebook3("tc1-file-ntb3.txt");
-    //cout<<generateListPasswords(pwd1,pwd2,pwd3);
-    //cout<<g(pwd2,pwd3)<<endl;
-    //cout<<(pwd1)<<endl;
-    //cout<<g(pwd1,g(pwd2,pwd3));
-    //cout<<g("923","456");
-    /*int arr[100][100]={};
-    //arr[100][100]={9};
-    for(int i=0;i<100;i++){
-        for(int j=0;j<100;j++){
-            arr[i][j]=-9;
-        }
-    }*/
-    //string email;
-    //int n3;
-    //cout<<enterLaptop("tc1-file-tag.txt","huong");
-    int id=0;
-    point all_points[200];
-    string points="(20,30)-(70,90)",thua;
-    read_points(points,all_points,id);
-    cout<<all_points[0].x<<" "<<all_points[0].y;
-    cout<<endl<<id;
-
-
-}
+////////////////////////////////////////////////
+///END OF STUDENT'S ANSWER
+////////////////////////////////////////////////
+#endif /* studyInPink_h */
