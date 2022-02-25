@@ -64,7 +64,7 @@ string notebook1(string ntb1) {
         getline(f,thua,'/');
         f>>n;
         f.ignore();
-        if (!ba_so(n)) return "000000000";
+        if (!ba_so(n)) return "0000000000";
         int n1=string_to_int(n);
         int arr[10]={0};
         int in;
@@ -79,7 +79,7 @@ string notebook1(string ntb1) {
 
 
 
-    return "000000000";
+    return "0000000000";
 }
 bool nam_so(string s,int& n2){
     if (s.size()!=5) return false;
@@ -100,6 +100,7 @@ int dem_chuoi(string s,string key){
 }
 string int_to_string(int n){
     string ans;
+    if (n==0) return "0";
     while(n!=0){
         ans=(char)(n%10+'0')+ans;
         n/=10;
@@ -136,7 +137,7 @@ string notebook2(string ntb2) {
         return correct_cntP(cntP);
 
     }
-    return "000000000";
+    return "0000000000";
 }
 
 void read_ntb3(string ntb3,int arr[][10]){
@@ -230,13 +231,13 @@ void find_max_line(int arr[][10],int max_line[]){
 string notebook3(string ntb3) {
     // Complete this function to gain point
     int arr[10][10],fibo[46],max_line[10];
-    read_ntb3("tc1-file-ntb3.txt",arr);
+    read_ntb3(ntb3,arr);
     calc_all_fibo(fibo);
     correct_matrix_ntb3(arr,fibo);
     find_max_line(arr,max_line);
     string ans=arr_to_string(max_line,10);
     return ans;
-    return "000000000";
+    return "0000000000";
 }
 
 string g(string a,string b){
