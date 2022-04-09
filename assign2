@@ -36,6 +36,7 @@ public:
 
     int distanceTo(const Point & otherPoint) const;
 };
+//
 //other function
 //
 #define doub(x) ((x)*(x))
@@ -60,8 +61,10 @@ string int_to_string(int x){
     if (negative) ans="-"+ans;
     return ans;
 }
+
 //
 //end
+//
 Point::Point(int x,int y){
     this->x=x;
     this->y=y;
@@ -124,9 +127,15 @@ Path::Path(): head(NULL),
                 tail(NULL),
                 count(0),
                 length(-1){}
-
 Path::~Path(){
-
+    Node * current_node=this->head,*temp;
+    for(int i=0;i<this->count;i++){
+        temp=current_node->next;
+        delete current_node;
+        current_node=temp;
+    }
+    current_node=nullptr;
+    temp=nullptr;
 }
 
 
@@ -145,8 +154,8 @@ void Path::addPoint(int x,int y){
     else {
         this->length+=(tail->point).distanceTo(tail->next->point);
     }
-    this->tail=new_node;;
-
+    this->tail=new_node;
+    new_node=nullptr;
 }
 
 
@@ -166,6 +175,9 @@ string Path::toString() const{
     return ans_path;
 }
 
+Point Path::getLastPoint() const{
+    return tail->point;
+}
 
 class Character {
 private:
@@ -182,6 +194,28 @@ public:
     void moveToPoint(int x, int y);
     string toString() const;
 };
+
+Character::Character(const string& name){
+    this->name=name;
+    this->path=new Path();
+}
+Character::~Character(){
+    delete this->path;
+    this->path=nullptr;
+}
+string Character::getName() const{
+    return this->name;
+}
+void Character::setName(const string& name){
+    this->name=name;
+}
+void Character::moveToPoint(int x,int y){
+    this->path->addPoint(x,y);
+}
+string Character::toString() const{
+    return "<Character[name:"+this->name+
+            ",path:"+(this->path->toString())+"]>";
+}
 
 bool rescueSherlock(
         const Character & chMurderer,
