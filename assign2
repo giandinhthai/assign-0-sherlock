@@ -1,0 +1,140 @@
+/*
+* Ho Chi Minh City University of Technology
+* Faculty of Computer Science and Engineering
+* Initial code for Assignment 1
+* Programming Fundamentals Spring 2022
+* Author: Vu Van Tien
+* Date: 15.02.2022
+*/
+
+//The library here is concretely set, students are not allowed to include any other libraries.
+#ifndef studyInPink_h
+#define studyInPink_h
+
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <string>
+#include <fstream>
+#include <sstream>
+
+using namespace std;
+
+////////////////////////////////////////////////////////////////////////
+///STUDENT'S ANSWER BEGINS HERE
+///Complete the following functions
+///DO NOT modify any parameters in the functions.
+////////////////////////////////////////////////////////////////////////
+
+class Point {
+private:
+    int x;
+    int y;
+public:
+    Point(int x=0, int y=0);
+    string toString() const;
+
+    int distanceTo(const Point & otherPoint) const;
+};
+//other function
+//
+#define doub(x) ((x)*(x))
+int round_up(double x){
+    if (round(x)==x) return x;
+    return round(x+0.5);
+}
+string int_to_string(int x){
+    string ans;
+    long long X=x;
+    bool negative=false;
+    if (X<0) {
+        negative=true;
+        X=-X;
+    }
+    ans=(char)(X%10+'0');
+    X/=10;
+    while(X!=0){
+        ans=(char)(X%10+'0')+ans;
+        X/=10;
+    }
+    if (negative) ans="-"+ans;
+    return ans;
+}
+//
+//end
+Point::Point(int x,int y){
+    this->x=x;
+    this->y=y;
+}
+string Point::toString() const{
+    return "<Point["+int_to_string(this->x)+
+            ','+int_to_string(this->y)+"]>";
+
+}
+int Point::distanceTo(const Point& b) const{
+    long long x12=(this->x)-(b.x);
+    x12=doub(x12);
+    long long y12=(this->y)-(b.y);
+    y12=doub(y12);
+    return round_up(sqrtl(x12+y12));
+}
+
+class Node {
+private:
+    Point point;
+    Node * next;
+
+    friend class Path;
+
+public:
+    Node(const Point & point=Point(), Node * next=NULL);
+    string toString() const;
+};
+
+class Path {
+private:
+    Node * head;
+    Node * tail;
+    int count;
+    int length;
+
+public:
+    Path();
+    ~Path();
+
+    void addPoint(int x, int y);
+    string toString() const;
+    Point getLastPoint() const;
+};
+
+class Character {
+private:
+    string name;
+    Path * path;
+
+public:
+    Character(const string & name="");
+    ~Character();
+
+    string getName() const;
+    void setName(const string & name);
+
+    void moveToPoint(int x, int y);
+    string toString() const;
+};
+
+bool rescueSherlock(
+        const Character & chMurderer,
+        const Character & chWatson,
+        int maxLength,
+        int maxDistance,
+        int & outDistance
+        ) {
+
+    return true;
+}
+
+////////////////////////////////////////////////
+///END OF STUDENT'S ANSWER
+////////////////////////////////////////////////
+#endif /* studyInPink_h */
