@@ -90,6 +90,17 @@ public:
     Node(const Point & point=Point(), Node * next=NULL);
     string toString() const;
 };
+Node::Node(const Point& point,Node*next){
+    this->point=point;
+    this->next=next;
+}
+string Node::toString() const{
+    return "<Node["+(this->point).toString()+"]>";
+}
+
+
+
+
 
 class Path {
 private:
@@ -106,6 +117,55 @@ public:
     string toString() const;
     Point getLastPoint() const;
 };
+
+
+
+Path::Path(): head(NULL),
+                tail(NULL),
+                count(0),
+                length(-1){}
+
+Path::~Path(){
+
+}
+
+
+
+void Path::addPoint(int x,int y){
+
+    Node* new_node=new Node(Point(x,y));
+    if (this->head==NULL){
+        this->head=new_node;
+    }
+    else{
+        this->tail->next=new_node;
+    }
+    this->count++;
+    if(this->count==1) {this->length=0;}
+    else {
+        this->length+=(tail->point).distanceTo(tail->next->point);
+    }
+    this->tail=new_node;;
+
+}
+
+
+string Path::toString() const{
+    //return int_to_string(this->length);
+    string ans_path="<Path[count:"+int_to_string(this->count)+",length:"+int_to_string(this->length)+",[";
+    if (this->count==0) return ans_path+"]]>";
+    //return "done2";
+    Node* current_node=this->head;
+    for(int i=0;i<this->count;i++){
+        ans_path+=current_node->toString();
+        if (i!=this->count-1) ans_path+=',';
+        else ans_path+=']';
+        current_node=current_node->next;
+    }
+    ans_path+="]>";
+    return ans_path;
+}
+
 
 class Character {
 private:
